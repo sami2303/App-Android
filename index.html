@@ -1,0 +1,28 @@
+<!-- Texto para indicar que escriba su nombre -->
+<div style="font-size:20px; position:absolute;left:10;top:10;" > Escribe tu nombre </div>
+
+<!-- Crea campo de texto para que el usuario escriba su nombre -->
+<input id="screen" name="num_campos" type="text" style="position:absolute;left:10;top:50";/>
+
+<!-- Inserta, oculta y crea directorio url para imagen .gif -->
+<img id='imagenMiky' src="img\imagen.gif" width="200" height="200" style="display:none; position:absolute;left:50;top:110;">
+
+<!-- Texto oculto para dar saludo -->
+<div id='saludo' style="font-size:20px; position:absolute;left:200;top:180; display:none;" > Hola </div>
+
+<!-- Funcion que hace aparecer en pantalla la imagen y el texto de saludo. -->
+<script type="text/javascript">
+
+var screen = document.getElementById("screen");
+
+function mostrar(){
+document.getElementById('imagenMiky').style.display = 'block';
+document.getElementById('saludo').style.display = 'block';}
+screen.value = 'samuel'
+</script>
+
+<!-- Boton que ejecuta la aparicion de la imagen y el texto de saludo. -->
+<input type="button" value="Mostrar" style="position:absolute;left:190;top:50"; onclick="mostrar()">
+
+
+
