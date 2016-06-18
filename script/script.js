@@ -689,33 +689,40 @@
 		   }		  
 	     else if(name == "raizxy")
 		   {
-		      if(partialDetectionGlobal.isNumber == false && partialDetectionGlobal.operatorNameDetected == true || 
-			     partialDetectionGlobal.isNumber == false && partialDetectionGlobal.otherOperatorNameDetected == false)
-	          { 
+			  var calculatingWithTheResult = false;
+			  
+			  calculatingWithTheResult = continueCalculatingWithTheResult(name,element); //Continua calculando con el resultado.
+			  
+			  if(calculatingWithTheResult == false){
+				  
+		         if(partialDetectionGlobal.isNumber == false && partialDetectionGlobal.operatorNameDetected == true || 
+			        partialDetectionGlobal.isNumber == false && partialDetectionGlobal.otherOperatorNameDetected == false)
+	             { 
 				
-				arrayScreenContainer = verifyArrayResultOfOperatorsAndNumbers(arrayScreenContainer); //Elimina los numeros que estan antes de la funcion en el array.
+				   arrayScreenContainer = verifyArrayResultOfOperatorsAndNumbers(arrayScreenContainer); //Elimina los numeros que estan antes de la funcion en el array.
 				
-				for(i=0, len = partialDetectionGlobal.numberRoot.length; i<len; i++)
-		        {  
-		           arrayScreenContainer.push(partialDetectionGlobal.numberRoot.charAt(i).fontsize(2).sup());
-		        }
+				   for(i=0, len = partialDetectionGlobal.numberRoot.length; i<len; i++)
+		           {  
+		              arrayScreenContainer.push(partialDetectionGlobal.numberRoot.charAt(i).fontsize(2).sup());
+		           }
 				
-	            arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-	            arrayScreenContainer.push('('.fontcolor('#FF4500'));
-				arrayOperatorsAndFunctions.push(name);
-				arrayOperatorsAndFunctions.push('(');
+	               arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+	               arrayScreenContainer.push('('.fontcolor('#FF4500'));
+				   arrayOperatorsAndFunctions.push(name);
+				   arrayOperatorsAndFunctions.push('(');
 				
-				screen.innerHTML = "";
-				for(i=0, len = arrayScreenContainer.length; i<len; i++)
-		        {  
-		          expressionToCalculate += arrayScreenContainer[i];
-		        }
+				   screen.innerHTML = "";
+				   for(i=0, len = arrayScreenContainer.length; i<len; i++)
+		           {  
+		             expressionToCalculate += arrayScreenContainer[i];
+		           }
 				
-				screen.innerHTML += expressionToCalculate;
-                errorDetector(element,true); //Cambia el color del boton a "azul", si es correcta la sintaxis.			 
-		      }
-			else{
-				 errorDetector(element,false); //Cambia el color del boton a "rojo", si es incorrecta la sintaxis. 
+				   screen.innerHTML += expressionToCalculate;
+                   errorDetector(element,true); //Cambia el color del boton a "azul", si es correcta la sintaxis.			 
+		         }
+			   else{
+				    errorDetector(element,false); //Cambia el color del boton a "rojo", si es incorrecta la sintaxis. 
+			     }
 			  }
 	       }
 		 else if(name == "%from" || name == "Mod" || name == "^" || name == "." || name == "/")
@@ -1282,7 +1289,7 @@
 	  var expressionToCalculate = "";
 	  var i, len;
 	  
-	  if(name == "+" || name == "-" || name == "*" || name == "/" || name == "^2" || name == "%from" || name == "Mod" || name == "^" || name == "." || name == "F-E"){
+	  if(name == "+" || name == "-" || name == "*" || name == "/" || name == "^2" || name == "raizxy" || name == "%from" || name == "Mod" || name == "^" || name == "." || name == "F-E"){
 	       
 		   if(screen1.innerHTML != "")
 	       {
@@ -1297,20 +1304,31 @@
 			 
 			 if(name == "^2"){
 				
-			 arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-	         arrayScreenContainer.push('^'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-			 arrayScreenContainer.push('2'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-			 arrayOperatorsAndFunctions.push(screen.innerHTML);
-             arrayOperatorsAndFunctions.push('^');
-			 arrayOperatorsAndFunctions.push('2');
-			 statusCharactersNumeric = false;
+			   arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+	           arrayScreenContainer.push('^'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+			   arrayScreenContainer.push('2'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+			   arrayOperatorsAndFunctions.push(screen.innerHTML);
+               arrayOperatorsAndFunctions.push('^');
+			   arrayOperatorsAndFunctions.push('2');
+			   statusCharactersNumeric = false;
 			 }
+			 
+		   else if(name == "raizxy"){
+                
+				arrayOperatorsAndFunctions.push(screen.innerHTML);
+				arrayOperatorsAndFunctions.push(name);
+				arrayOperatorsAndFunctions.push('(');
+				arrayScreenContainer.push(screen.innerHTML.fontsize(2).sup());
+	            arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+	            arrayScreenContainer.push('('.fontcolor('#FF4500'));
+		    }
+			 
 		   else{ 
-			 arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-	         arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-			 arrayOperatorsAndFunctions.push(screen.innerHTML);
-             arrayOperatorsAndFunctions.push(name); 
-		   }
+			   arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+	           arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+			   arrayOperatorsAndFunctions.push(screen.innerHTML);
+               arrayOperatorsAndFunctions.push(name); 
+		     }
 			 
 			 screen.innerHTML = ""; //Limpia la caja de texto.
 			 for(i=0, len = arrayScreenContainer.length; i<len; i++)
@@ -1345,24 +1363,24 @@
 			 
 			 if(name == "raiz_1"){
 				
-				arrayScreenContainer[arrayScreenContainer.length] = converterCharacter(name); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = '('.fontcolor('#FF4500'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen". 				 		 
-				arrayScreenContainer[arrayScreenContainer.length] = screen.innerHTML; //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = name;
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = "(";
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = screen.innerHTML;
+				arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push('('.fontcolor('#FF4500')); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen". 				 		 
+				arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+				arrayOperatorsAndFunctions.push(name);
+				arrayOperatorsAndFunctions.push("(");
+				arrayOperatorsAndFunctions.push(screen.innerHTML);
 			 }
 			 
 		   else if(name == "log"){
 			    
 				for(i=0, len = screen.innerHTML.length; i<len; i++)
-		         {  
+		        {  
 				   arrayOperatorsAndFunctions.push(screen.innerHTML.charAt(i)); //Alamacena el resultado numerico en el array.
-		         }
+		        }
 
 			    var partialDetectionGlobal = PartialVerificationOfOperatorsAndFunctions(arrayOperatorsAndFunctions,name);
 				arrayOperatorsAndFunctions.push(name); //Alamacena la funcion en el array.
-				arrayOperatorsAndFunctions.push('('); //Alamacena la funcion en el array.
+				arrayOperatorsAndFunctions.push('(');
 			    arrayScreenContainer.push("log");
 
 				 for(i=0, len = partialDetectionGlobal.numberRoot.length; i<len; i++)
@@ -1375,49 +1393,49 @@
 			 
 		   else if(name == "raiz"){
 			   
-			    arrayScreenContainer[arrayScreenContainer.length] = converterCharacter(name); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = screen.innerHTML; //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = name;
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = screen.innerHTML;
+			    arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+				arrayOperatorsAndFunctions.push(name);
+				arrayOperatorsAndFunctions.push(screen.innerHTML);
 			 }
 			 
 		   else if(name == "10^"){
 			   
-			    arrayScreenContainer[arrayScreenContainer.length] = '10'; //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = '^'; //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = screen.innerHTML; //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = '10';
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = '^';
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = screen.innerHTML;
-				statusCharactersNumeric = false;
+			    arrayScreenContainer.push('10'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push('^'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+				arrayOperatorsAndFunctions.push('10');
+				arrayOperatorsAndFunctions.push('^');
+				arrayOperatorsAndFunctions.push(screen.innerHTML);
+				statusCharactersNumeric = false; //Desactiva los caracteres numericos.
 			 }
 			 
 		   else if(name == "e^"){
 			   
-			    arrayScreenContainer[arrayScreenContainer.length] = 'e'; //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = '^'; //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = screen.innerHTML; //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = 'e';
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = '^';
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = screen.innerHTML;
-				statusCharactersNumeric = false;
+			    arrayScreenContainer.push('e'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push('^'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+				arrayOperatorsAndFunctions.push('e');
+				arrayOperatorsAndFunctions.push('^');
+				arrayOperatorsAndFunctions.push(screen.innerHTML);
+				statusCharactersNumeric = false; //Desactiva los caracteres numericos.
 			 }
 			 
 		   else if(name == "sin" || name == "cos" || name == "tan" || name == "asin" || name == "acos" || name == "atan" || name == "ln" || name == "n!"){
 			    
-				arrayScreenContainer[arrayScreenContainer.length] = converterCharacter(name); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = '('.fontcolor('#FF4500'); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen". 				 		 
-				arrayScreenContainer[arrayScreenContainer.length] = screen.innerHTML; //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = name;
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = "(";
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = screen.innerHTML; 
+				arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push('('.fontcolor('#FF4500')); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen". 				 		 
+				arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+				arrayOperatorsAndFunctions.push(name);
+				arrayOperatorsAndFunctions.push("(");
+				arrayOperatorsAndFunctions.push(screen.innerHTML); 
 		   }
 			 
 			 else{
-				arrayScreenContainer[arrayScreenContainer.length] = converterCharacter(name); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
-				arrayScreenContainer[arrayScreenContainer.length] = screen.innerHTML; //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = name;
-				arrayOperatorsAndFunctions[arrayOperatorsAndFunctions.length] = screen.innerHTML;
+				arrayScreenContainer.push(converterCharacter(name)); //El array almacena la expresion igual como aparece en pantalla, en la caja de texto "screen".
+				arrayScreenContainer.push(screen.innerHTML); //El array almacena el resultado que aparece en pantalla,es decir, en la caja de texto "screen".
+				arrayOperatorsAndFunctions.push(name);
+				arrayOperatorsAndFunctions.push(screen.innerHTML);
 			   }
 			   
 			 screen.innerHTML = ""; //Limpia la caja de texto.
