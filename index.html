@@ -1,30 +1,554 @@
-<!-- Texto para indicar que escriba su nombre -->
-<div style="font-size:20px; position:absolute;left:10;top:10;" > Escribe tu nombre </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<!-- Crea campo de texto para que el usuario escriba su nombre -->
-<input id="screen" name="num_campos" type="text" style="position:absolute;left:10;top:50";/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title> Calculator </title>
+<link rel= "stylesheet" href="css/styleCss.css"> <!-- Carga el esttilo CSS. -->
 
-<!-- Inserta, oculta y crea directorio url para imagen .gif -->
-<img id='imagenMiky' src="img\imagen.gif" width="200" height="200" style="display:none; position:absolute;left:50;top:110;">
+</head>
 
-<!-- Texto oculto para dar saludo -->
-<div id='saludo' style="font-size:20px; position:absolute;left:200;top:180; display:none;" > Hola </div>
+<body onLoad="startTouch();">
 
-<!-- Funcion que hace aparecer en pantalla la imagen y el texto de saludo. -->
-<script type="text/javascript">
+	<div id="divContainer" style="height:100%; width:100%"> <!-- TOTAL: 100%. -->
+		<!-- 4% del total. -->
+		<div class="style-container-button3"> <!-- Estilo CSS #1. -->
+			<div id="Standard" class="style-label1" onclick="showCalculatorStandard(this)"> <!-- Estilo CSS #2. -->
+				Standard
+			</div>
+		</div>
+		
+		<div class="style-container-button3"> <!-- Estilo Css #1. -->
+			<div id="Scientific" class="style-label1" onclick="showCalculatorScientific(this)"> <!-- Estilo CSS #2. -->
+				Scientific
+			</div>
+		</div>
+		
+		<div class="style-container-button3"> <!-- Estilo Css #1. -->
+			<div id="Converter" class="style-label1" style="visibility:hidden;" onclick="showCalculatorConverter(this)"> <!-- Estilo Css #2. -->
+				Converter
+			</div>
+		</div>
+		<!-- 2% del total. -->
+		<div class="style-container-screen"> <!-- Estilo Css #3. -->
+			<div>
+				<!-- Linea negra de separacion. -->
+			</div>
+		</div>
+		<!-- 4% del total. -->
+		<div class="style-container-button4"> <!-- Estilo Css #4. -->
+			<div class="style-label3" name="Expression#1" id="Expression#1"> <!-- Estilo Css #5. -->
+				Expression#1
+			</div>
+		</div>
+		
+		<div class="style-container-button4"> <!-- Estilo Css #4. -->
+			<div class="style-label4" name="Expression#2" id="Expression#2"> <!-- Estilo Css #6. -->
+				Expression#2
+			</div>
+		</div>
+		
+		<div class="style-container-button4"> <!-- Estilo Css #4. -->
+			<div class="style-label5" name="Expression#3" id="Expression#3"> <!-- Estilo Css #7. -->
+				Expression#3
+			</div>
+		</div>
+		
+		<div class="style-container-button4"> <!-- Estilo Css #4. -->
+			<div class="style-label6" name="Expression#4" id="Expression#4"> <!-- Estilo Css #8. -->
+				Expression#4
+			</div>
+		</div>
+		 <!-- 3.5% del total. -->
+		<div id="screen11" class="style-container-screen1"> <!-- Estilo Css #9. -->
+			    <!-- Caja de texto donde se almacena el resultado de la operacion, es decir, la memoria. -->
+		</div>
+		<!-- 1% del total. -->
+		<div class="style-container-screen2"> <!-- Estilo Css #10. -->
+				<!-- Linea Verde de separacion -->
+		</div>
+		<!-- 6% del total. -->
+		<div id= "containerScreen1" class="style-container-screen3"> <!-- Estilo Css #11. -->
+			<div class="style-label10" id="screen1"> <!-- Estilo Css #12. -->
+				<!-- Caja de texto que almacena la expresion calculada -->
+			</div>
+		</div>
+		<!-- 12.5% del total. -->
+		<div contentEditable = "true" class="style-section needsclick" name="screen" id="screen" onclick="getCursorPositionInScreen(this)"> <!-- Estilo Css #13. -->
+         <!-- Caja de texto donde se escribe la expresion y se muestra el resultado -->
+		</div>
+		<!-- 6% del total. -->
+		<div class="style-container-button1"> <!-- Estilo Css #14. -->
+			<div class="style-label7" name="ExpressionFinal" id="ExpressionFinal"> <!-- Estilo Css #15. -->
+			    Continue Writing Expression
+			</div>
+		
+			<div class="style-label8" name= "left" id="left" onclick="editingText(this)"> <!-- Estilo Css #16. -->
+				<<<
+			</div>
+		
+			<div class="style-label9" name="right" id="right" onclick="editingText(this)"> <!-- Estilo Css #17. -->
+				>>>
+			</div>
+		</div>
+		
+		<!-- *****************************************************************CALCULADORA#1 "Calculator-Standard"******************************************************************** -->
+		
+		<div id="Calculator-Standard" style="height:100%; width:100%;"> <!-- 61% del total. -->
+		
+			<div class="style-container-button"> <!-- Estilo Css #18. -->
+				<div class="style-label" name="M" id="memory" onclick="pressbutton(this)"">  <!-- Estilo Css #19. -->
+					M
+				</div>
+			</div>
 
-var screen = document.getElementById("screen");
+			<div class="style-container-button"> <!-- Estilo Css #18. -->
+				<div class="style-label" name='CE' id="CE" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					CE
+				</div>
+			</div>
 
-function mostrar(){
-document.getElementById('imagenMiky').style.display = 'block';
-document.getElementById('saludo').style.display = 'block';}
-screen.value = 'samuel'
-</script>
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name='C' id="C" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					C
+				</div>
+			</div>
 
-<!-- Boton que ejecuta la aparicion de la imagen y el texto de saludo. -->
-<input type="button" value="Mostrar" style="position:absolute;left:190;top:50"; onclick="mostrar()">
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name= 'delete' id='delete' onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+				&#8592;
+				</div>
+			</div>
 
-<!-- Agregando nueva linea al codigo -->
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="/" id="/" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					&divide;
+				</div>
+			</div>
 
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="signo" id="signo" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					&#177;
+				</div>
+			</div>
 
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="7" id="7" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					7
+				</div>
+			</div>
 
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="8" id="8" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					8
+				</div>
+			</div>
+
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="9" id="9" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					9
+				</div>
+			</div>
+
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="*" id="*" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					x
+				</div>
+			</div>
+
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="raiz" id="raiz" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					&#8730;
+				</div>
+			</div>
+
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="4" id="4" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					4
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="5" id="5" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					5
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="6" id="6" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					6
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="-" id="-" onclick="pressbutton(this)">
+					-
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="%from" id="%" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					%
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="1" id="1" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					1
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="2" id="2" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					2
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="3" id="3" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					3
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="+" id="+" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					+
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="1/" id="1/" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					1/x
+				</div>
+			</div>
+		
+			<div class="style-container-button2"> <!-- Estilo Css #20. -->
+				<div class="style-label" name="0" id="0" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					0
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="." id="." onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					.
+				</div>
+			</div>
+		
+			<div class="style-container-button">  <!-- Estilo Css #18. -->
+				<div class="style-label" name="sum" id="=" onclick="pressbutton(this)"> <!-- Estilo Css #19. -->
+					=
+				</div>
+			</div>
+			
+		</div>
+	
+	<!-- *****************************************************************CALCULADORA#2 "Calculator-Scientific"******************************************************************** -->
+		
+		<div id="Calculator-Scientific" style="height:100%; width:100%; display:none;"> <!-- 61% del total. -->
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="Deg" id="Deg_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					Deg
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='(' id="(_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					(
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name=')' id=")_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					)
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name= 'F-E' id='F-E_1' onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					F-E
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="M" id="memory_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					M
+				</div>
+			</div>
+			
+			<div class="style-container-button6">  <!-- Estilo Css #23. -->
+				<div class="style-container-screen4"> <!-- Estilo Css #24. -->
+					<!-- Linea Vertical negra -->
+				</div>
+			</div>
+			
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="CE" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					CE
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='C' onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					C
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='delete' id="delete_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					&#8592;
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name= '/' id='/_1' onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					&divide;
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="pi" id="pi_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					&#960;
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="sin" id="sin_1"onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					sin
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="cos" id="cos_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					cos
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="tan" id="tan_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					tan
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="signo" id="signo_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					&#177;
+				</div>
+			</div>
+			
+			<div class="style-container-button6"> <!-- Estilo Css #23. -->
+				<div class="style-container-screen4"> <!-- Estilo Css #24. -->
+					<!-- Linea Vertical negra -->
+				</div>
+			</div>
+			
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="7" id="7_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					7
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='8' id="8_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					8
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='9' id="9_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					9
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name= '*' id='*_1' onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					x
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="^2" id="^2_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					x&sup2;
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="asin" id="asin_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					sin-1
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="acos" id="acos_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					cos-1
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="atan" id="atan_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					tan-1
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="raiz_1" id="raiz_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					&#8730;
+				</div>
+			</div>
+			
+			<div class="style-container-button6"> <!-- Estilo Css #23. -->
+				<div class="style-container-screen4"> <!-- Estilo Css #24. -->
+					<!-- Linea Vertical negra -->
+				</div>
+			</div>
+			
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="4" id="4_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					4
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='5' id="5_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					5
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='6' id="6_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					6
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name= '-' id='-_1' onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					-
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="^" id="^_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					^
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="10^" id="10^_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					10^
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="e^" id="e^_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					e^
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="Mod" id="Mod_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					Mod
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="%from" id="%_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					%
+				</div>
+			</div>
+			
+			<div class="style-container-button6"> <!-- Estilo Css #23. -->
+				<div class="style-container-screen4"> <!-- Estilo Css #24. -->
+					<!-- Linea Vertical negra -->
+				</div>
+			</div>
+			
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="1" id="1_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					1
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='2' id="2_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					2
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='3' id="3_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					3
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name= '+' id='+_1' onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					+
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="raizxy" id="raizxy_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					&#8319;&#8730x
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="log" id="log_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					logx
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="ln" id="ln_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					ln
+				</div>
+			</div>
+		
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="n!" id="n!_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					n!
+				</div>
+			</div>
+			
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name="1/" id="1/_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					1/x
+				</div>
+			</div>
+			
+			<div class="style-container-button6"><!-- Estilo Css #23. -->
+				<div class="style-container-screen4"> <!-- Estilo Css #24. -->
+					<!-- Linea Vertical negra -->
+				</div>
+			</div>
+			
+			<div class="style-container-button7"> <!-- Estilo Css #25. -->
+				<div class="style-label11" name="0" id="0_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					0
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='.' id="._1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					.
+				</div>
+			</div>
+
+			<div class="style-container-button5"> <!-- Estilo Css #21. -->
+				<div class="style-label11" name='sum' id="=_1" onclick="pressbutton(this)"> <!-- Estilo Css #22. -->
+					=
+				</div>
+			</div>
+	
+		</div>
+		
+	</div>
+	
+	<script type="application/javascript" async src="lib/fastclick.js"></script> <!-- Carga la libreria fastclick -->
+    <script type="text/javascript" language="javascript" src="jquery/jquery.js"></script> <!-- Carga el JQuery -->
+	<script type="text/javascript" language="javascript" src="script/script.js"></script> <!-- Carga el script -->
+		
+</body>
+
+</html>
