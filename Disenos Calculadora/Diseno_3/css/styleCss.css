@@ -5,7 +5,7 @@ html, body{
 		width:100%;
 		/*background-color:black;*/
 		padding:0px; margin:0px;
-		background-image:url(imgFondo/fondo.png);
+		background-image:url(imgFondo/fondo.png); /* Codigo de color de fondo #04c975 */
         background-size: 100% 100%;
 	}
 	 /*Estilo Css #1.*/
@@ -20,8 +20,9 @@ html, body{
 	/*Estilo Css #2.*/
 	.style-label1{
 	    display:table-cell;
-		font:oblique 80% cursive;
-		color:white;
+		font-family:verdana;
+		font-size:12px;
+		color:black;
 		text-align: left;
 		background-color:transparent;
 		vertical-align: middle;
@@ -105,31 +106,31 @@ html, body{
 		text-align:right;
 		font-family:verdana;
 		font-size:13px;
-		color:white;
-		background-color:black;
+		color:black;
+		background-color:e6e6e6;
 	}
 	/*Estilo Css #10.*/
 	.style-container-screen2{
 		float:left;
 		width:100%; 
 		height:1%;
-		background-color:Limegreen;
+		background-color:white;
 	}
 	/*Estilo Css #11.*/
 	.style-container-screen3{
 		float:left;
 		width:100%; 
 		height:6%;
-		background-color:#262626;
+		background-color:#e6e6e6;
 	}
 	/*Estilo Css #12.*/
 	.style-label10{
-		background-color:#262626;
+		background-color:#e6e6e6;
 		white-space:nowrap;
 		overflow:hidden;
 		font-family:verdana;
 		font-size:18px;
-		color:white;
+		color:black;
 		letter-spacing: 1px;
 		box-sizing:border-box;
 	}
@@ -138,16 +139,15 @@ html, body{
 		float:left;
 		width:100%;
 		height:12.5%;
-		background-color:#262626;
+		background-color:#e6e6e6; 
 		text-indent:-1000px;
 		white-space:nowrap;
 		overflow:hidden;
         font-family:verdana;
 		font-size:28px;
-		color:white;
+		color:black;
 		text-align: right;
 		letter-spacing: 1px;
-        border-radius: 0px 0px 25px 25px;
         -webkit-tap-highlight-color:rgba(0,0,0,0);		
 	}
 	/*Estilo Css #13.*/
@@ -247,10 +247,9 @@ html, body{
 	    display:table-cell;
 		font-family:arial;
 		font-size:26px;
-		color:white;
+		color:black;
 		text-align: center;
-		/*background-color:#3d3d3d;*/
-		background-image:url(imgBoton/boton.png);
+		background-color:white;
         background-size: 100% 100%;               
 		vertical-align: middle;
 		border-radius: 20% 20% 20% 20%;
@@ -292,11 +291,10 @@ html, body{
 	    display:table-cell;
 		font-family:arial;
 		font-size:13px;
-		color:white;
+		color:black;
 		text-align: center;
-		background-image:url(imgBoton/boton.png);
+		background-color:white;
         background-size: 100% 100%;
-		/*background-color:#3d3d3d;*/
 		vertical-align: middle;
 		border-radius: 20% 20% 20% 20%;
 		-webkit-tap-highlight-color:rgba(0,0,0,0);

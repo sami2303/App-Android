@@ -21,7 +21,7 @@ html, body{
 	.style-label1{
 	    display:table-cell;
 		font:oblique 80% cursive;
-		color:white;
+		color:black;
 		text-align: left;
 		background-color:transparent;
 		vertical-align: middle;
@@ -147,7 +147,6 @@ html, body{
 		color:white;
 		text-align: right;
 		letter-spacing: 1px;
-        border-radius: 0px 0px 25px 25px;
         -webkit-tap-highlight-color:rgba(0,0,0,0);		
 	}
 	/*Estilo Css #13.*/

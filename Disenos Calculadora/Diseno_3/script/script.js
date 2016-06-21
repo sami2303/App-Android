@@ -189,25 +189,25 @@
 		  {
 			 
 			 if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
-			   identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
+			   identity.id.style.backgroundColor = "#e6e6e6"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
 		     }
 		   else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
 			   identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'.DarkTurquoise  
 		     }
 		   else if(errorMemory == true && screen11.innerHTML == ''){ 
-		       identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";
+		       identity.id.style.backgroundColor = "white";
 		     }
 			 errorMemory = true;
 		  }
 		else if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
-			identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
+			identity.id.style.backgroundColor = "#e6e6e6"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
 		  }
 		else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
 			identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'.DarkTurquoise  
 		  }
 	    else if(identity.name != null){
 			setTimeout(function(){ 
-			identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";},100);
+			identity.id.style.backgroundColor = "white";},200);
 			end_mseg = start_mseg.getMilliseconds();
 		  }
 		  
@@ -241,13 +241,13 @@
 			    errorMemory = true;			
 		      }
 		    else if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
-			    identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
+			    identity.id.style.backgroundColor = "#e6e6e6"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
 		      }
 		    else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
 			    identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'. 
 		      }
 	        else if(identity.name != null){
-			    identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";
+			    identity.id.style.backgroundColor = "white";
 		      }
 		  }
 	    else{
@@ -656,15 +656,11 @@
 		  
 	      if(enable == true){
 			  element.style.backgroundImage = 'none';
-			  element.style.backgroundColor = '#00c7ff';
-			  //setTimeout(function(){ 
-			  //element.style.backgroundImage = "url('css/imgBoton/boton.png')";},500);		  
+			  element.style.backgroundColor = '#00c7ff';	  
 	      }
 	    else if(enable == false){	 
             element.style.backgroundImage = 'none';
 			element.style.backgroundColor = 'red';
-            //setTimeout(function(){ 
-			//element.style.backgroundImage = "url('css/imgBoton/boton.png')";},500);
 	      }
 	  }
     } 
@@ -1640,12 +1636,12 @@
 		  element.style.backgroundImage = 'none';
 		  
 		   if(name == "memory"){
-		     element.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M".
-		     screen11.innerHTML = "Memory = " + screen.innerHTML.fontcolor("LimeGreen"); //Se visualiza el resultado de la memoria en la caja de texto "screen11".
+		     element.style.backgroundColor = "#e6e6e6"; //Cambia el color de fondo del boton "M".
+		     screen11.innerHTML = "Memory = " + screen.innerHTML.fontcolor("black"); //Se visualiza el resultado de la memoria en la caja de texto "screen11".
 		   }
 		 else if(name == "memory_1"){
 		    element.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M".
-		    screen11.innerHTML = "Memory = " + screen.innerHTML.fontcolor("DarkTurquoise"); //Se visualiza el resultado de la memoria en la caja de texto "screen11".
+		    screen11.innerHTML = "Memory = " + screen.innerHTML.fontcolor("black"); //Se visualiza el resultado de la memoria en la caja de texto "screen11".
 		   }
 		   
 		  statusMemory = false;
@@ -1670,7 +1666,7 @@
 			     screen.innerHTML += quarryingNumbersInText(screen11.innerHTML).fontcolor("DarkTurquoise");
 			   }
 			  
-			  element.style.backgroundImage = "url('css/imgBoton/boton.png')";
+			  element.style.backgroundColor = "white";
 			  screen11.innerHTML = "";
 			  statusMemoryResult = false;
 			  statusNumericalresultsInScreen = true;
@@ -2622,7 +2618,7 @@
 	document.getElementById('Expression#2').style.display = 'none';
 	document.getElementById('Expression#3').style.display = 'none';
 	document.getElementById('Expression#4').style.display = 'none';
-	document.getElementById('lineSeparation').style.backgroundColor = "Limegreen";
+	document.getElementById('lineSeparation').style.backgroundColor = "white";
 	resetCalculator(name);
 	}
 	
