@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="app.aknology" version="alpha 0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://www.aknology.com">
+    <name>Calculator</name>
+    <description>
+        Aplicacion amiga del estudiante.
+    </description>
+    <author email="samuel.sifontes@aknology.com" href="http://www.aknology.com">
+        Studio Calculator
+    </author>
+    <content src="index.html" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+	<application>
+        android:debuggable="false"
+	</application>
+    <platform name="android">
+        <allow-intent href="market:*" />
+		<icon src="www/icon/icon.png" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+</widget>

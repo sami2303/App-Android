@@ -1,7 +1,6 @@
 
  //Declaracion de variables globales.
 	var screen = document.getElementById("screen");
-	var scrollScreenX = null;
 	var screen1 = document.getElementById("screen1");
 	screen.innerHTML = "";
 	screen1.innerHTML = "";
@@ -17,7 +16,10 @@
 	var arrayOperatorsAndFunctions = new Array();
 	var arrayGuardingPlaceFromAParenthesis = new Array();
 	
+	var statusVerifingIndentText = true;
 	var statusCharactersNumeric = true;
+	var start_mseg;
+	var end_mseg;
 	
 //+------------------------------------------------------------------+
 //|     PRINCIPAL        **FUNCION:pressbutton**      PRINCIPAL      |
@@ -25,6 +27,7 @@
 
 	function pressbutton(element){
 		
+      start_mseg = new Date();
 	  var name = element.getAttribute("name");
 	  var isNumber = isNaN(name); //Verifica si el caracter es numerico.
 	  		  
@@ -35,9 +38,9 @@
 	    {
 	      verifyOperatorsAndFunctions(element,name,isNumber);
 	    } 
-
-	  scrollScreenX = screen.scrollLeft;
-	  screen.scrollLeft = scrollScreenX + 5000;
+	
+      screen.style.textIndent = '-1000px'; //Se activa para ocultar el texto hacia la izquierda.
+	  statusVerifingIndentText = true; // Se activa para saber cuanto texto hay oculto en la pantalla, es decir, en el div.
     }
 
 //+------------------------------------------------------------------+
@@ -47,6 +50,108 @@
 	window.addEventListener('load', function (){
 		FastClick.attach(document.body);
 	}, false);
+
+//+------------------------------------------------------------------+
+//|                    **FUNCION:startTouch**                        |
+//+------------------------------------------------------------------+
+	
+	function startTouch(){
+        var xIni;
+        var yIni;
+		var dist = 0;
+		var screen = document.getElementById('screen');
+		var direction = 0;
+		var indentText = dysplayTextWidthOutsideTheDiv(); //Obtiene el ancho del texto que se oculta en la caja.;
+	    var hiddenWidth = indentText;
+		  
+      screen.addEventListener('touchstart', function(e)
+	  {  
+          if (e.targetTouches.length == 1)
+		  { 
+            var touch = e.targetTouches[0]; 
+            xIni = touch.pageX;
+            yIni = touch.pageY;
+          }
+		  
+		  if(statusVerifingIndentText == true){
+		    indentText = dysplayTextWidthOutsideTheDiv(); //Obtiene el ancho del texto que se oculta en la caja.
+	        hiddenWidth = indentText; //Alamacena el ancho del texto oculto.
+			statusVerifingIndentText = false;
+	      }
+		  
+      }, false);
+       
+   
+      screen.addEventListener('touchmove', function(e)
+	  {
+
+        if (e.targetTouches.length == 1)
+		{
+			
+          var touch = e.targetTouches[0];
+		  
+          if((touch.pageX>xIni+5) && (touch.pageY> yIni-50) && (touch.pageY<yIni+50)) //Desplaza el texto hacia la derecha.
+		  {
+			  dist = indentText + 5;
+			  
+			  if(indentText < 0 && dist < 0)
+			  {
+			    screen.style.textIndent = dist + "px";
+			    indentText = parseInt(screen.style.textIndent);
+		      }
+			else{
+				  dist = -1;
+			  }
+			  
+			  //Detecta el cambio de direccion de derecha hacia la izquierda.
+				if(touch.pageX > direction){ 
+				  direction = touch.pageX;
+				}
+			  else{
+				   direction = 99999;
+				   xIni = 99999;				   
+				}
+
+				//screen1.innerHTML = touch.pageX + " y " + "dist= " + dist + " y " + "indentText =" + indentText + " y " + "direction =" + direction;		
+          }
+          
+          if((touch.pageX<xIni-5) && (touch.pageY> yIni-50) && (touch.pageY<yIni+50)) //Desplaza el texto hacia la izquierda.
+		  {
+		     
+			     dist -= 5;
+			 
+			    if(indentText < 0 && dist < 0 & hiddenWidth < indentText)
+		        {
+			      screen.style.textIndent = dist + "px";
+			      indentText = parseInt(screen.style.textIndent);
+		        }
+			  else{
+				  dist = -1;
+			    }
+				
+			  //Detecta el cambio de direccion de izquierda hacia la derecha.
+				if(touch.pageX < direction){ 
+				  direction = touch.pageX;	
+				}
+			  else{
+                   direction = 0;
+				   xIni = 0;			   
+				}
+				 
+				//screen1.innerHTML = touch.pageX + " y " + "dist= " + dist + " y " + "indentText =" + indentText + " y " + "direction =" + direction;   				
+          }
+		
+        }		
+      }, false);
+	  
+	  
+	 screen.addEventListener('touchend', function(e)
+	 {
+		direction = 0;
+
+     }, false)
+                             
+    }
 	
 //+------------------------------------------------------------------+
 //|                  **FUNCION:startButtonTouch**                    |
@@ -58,79 +163,61 @@
 	  var statusMouse = true;
 	  var statusTouchMove = true;
 	  var t = 0;
-	  var variousTouches = false;
-	  var lastId = null;
 	  
 	  //Instruccion para el Touch.
-      document.addEventListener('touchstart', function(e) //Se activa con el touch.
+      document.addEventListener('touchstart', function() //Se activa con el touch.
 	  {
-		if (e.touches.length == 1)	
-		{
-		  identity = captureId(event);
+		identity = captureId(event);
 		
-		  if(identity.name != null){
-	        pressbutton(identity.id);			
-	      }
-		}
-	  else{
-			variousTouches = true;
-		}
+		if(identity.name != null){
+	      pressbutton(identity.id);	
+	    }
 
 	  }, false);
          
 	  document.addEventListener('touchmove', function() //Se activa cuando se desliza en el touch.
 	  {
-		if (variousTouches == false)	
-		{
-		  statusTouchMove = false;
-		  errorMemory = true;
-		}
+		 statusTouchMove = false;
+		 errorMemory = true;
 
       }, false)
 	  
 	  document.addEventListener('touchend', function() //Se activa cuando se deja el touch.
 	  {
-		if (variousTouches == false)	
-		{
-		   if(identity.name == 'memory' && errorMemory == false || identity.name == 'memory' &&  statusTouchMove == false ||
-		       identity.name == 'memory_1' && errorMemory == false || identity.name == 'memory_1' &&  statusTouchMove == false)
-		   {
+		  if(identity.name == 'memory' && errorMemory == false || identity.name == 'memory' &&  statusTouchMove == false ||
+		     identity.name == 'memory_1' && errorMemory == false || identity.name == 'memory_1' &&  statusTouchMove == false)
+		  {
 			 
-			  if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
-			     identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
-		      }
-		    else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
-			     identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'.DarkTurquoise  
-		      }
-		    else if(errorMemory == true && screen11.innerHTML == ''){ 
-		        identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";
-		      }
-			    errorMemory = true;
+			 if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
+			   identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
+		     }
+		   else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
+			   identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'.DarkTurquoise  
+		     }
+		   else if(errorMemory == true && screen11.innerHTML == ''){ 
+		       identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";
+		     }
+			 errorMemory = true;
+		  }
+		else if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
+			identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
+		  }
+		else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
+			identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'.DarkTurquoise  
+		  }
+	    else if(identity.name != null){
+			setTimeout(function(){ 
+			identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";},100);
+			end_mseg = start_mseg.getMilliseconds();
+		  }
+		  
+		   if(statusTouchMove == true){
+	         statusMouse = false;
 		   }
-		 else if(identity.name == 'memory' && errorMemory == true && screen11.innerHTML != ''){
-			 identity.id.style.backgroundColor = "LimeGreen"; //Cambia el color de fondo del boton "M" a 'verde'.DarkTurquoise			
+		 else{
+			  statusTouchMove = true;
 		   }
-		 else if (identity.name == 'memory_1' && errorMemory == true && screen11.innerHTML != ''){
-			 identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'.DarkTurquoise  
-		   }
-	     else if(identity.name != null){
-			  if(lastId != null){
-		        lastId.style.backgroundImage = "url('css/imgBoton/boton.png')";
-		      }
-			  setTimeout(function(){ 
-			  identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";},100);
-			  lastId = identity.id;
-		   }
-		}
-		    if(statusTouchMove == true){
-	          statusMouse = false;
-		    }
-		  else{
-			   statusTouchMove = true;
-		    }
 
-			variousTouches = false;
-		
       }, false)
 	  
 	  //Instruccion para el Mouse.
@@ -160,7 +247,7 @@
 			    identity.id.style.backgroundColor = "DarkTurquoise"; //Cambia el color de fondo del boton "M" a 'Turquesa'. 
 		      }
 	        else if(identity.name != null){
-			    identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')"; 
+			    identity.id.style.backgroundImage = "url('css/imgBoton/boton.png')";
 		      }
 		  }
 	    else{
@@ -186,6 +273,47 @@
 		var returningVariables = {id: id,name: name};
 		return returningVariables;
 	}
+	
+//+------------------------------------------------------------------+
+//|                    **FUNCION:getTextWidth**                      |
+//+------------------------------------------------------------------+
+
+	(function($){
+	  $.fn.pixelTextWidth = function(){
+		$('body').append('<span style="display:none; font-family:verdana; font-size:28px; letter-spacing:1px;" id="charw"></span>');
+        var textDiv = $(this).text();
+        var textWidth = 0;
+		
+        for(var i = 0; textDiv.length > i; i++){
+            if(textDiv[i] != ' '){
+                $('#charw').text(textDiv[i]);
+            }else{
+                $('#charw').html('&nbsp;');
+            }
+            textWidth += $('#charw').width();
+		}
+		
+        $('#charlen').remove();
+        return textWidth;
+	  }
+	})(jQuery);
+
+//+------------------------------------------------------------------+
+//|           **FUNCION:dysplayTextWidthOutsideTheDiv**              |
+//+------------------------------------------------------------------+
+
+	function dysplayTextWidthOutsideTheDiv(){
+
+		var textWidth = 0;
+		var div_Width = 0;
+
+         textWidth = $('#screen').pixelTextWidth(); //Obtiene el ancho del texto dentro del div.
+
+	     div_Width = $("#screen").width(); //Obtiene el ancho del div.
+	  
+        var textWidthOutsideTheDiv = div_Width - textWidth;
+		return textWidthOutsideTheDiv;
+    }
 	   	
 //+------------------------------------------------------------------+
 //|                **FUNCION:converterCharacter**                    |
@@ -528,11 +656,15 @@
 		  
 	      if(enable == true){
 			  element.style.backgroundImage = 'none';
-			  element.style.backgroundColor = '#00c7ff';	  
+			  element.style.backgroundColor = '#00c7ff';
+			  //setTimeout(function(){ 
+			  //element.style.backgroundImage = "url('css/imgBoton/boton.png')";},500);		  
 	      }
 	    else if(enable == false){	 
             element.style.backgroundImage = 'none';
 			element.style.backgroundColor = 'red';
+            //setTimeout(function(){ 
+			//element.style.backgroundImage = "url('css/imgBoton/boton.png')";},500);
 	      }
 	  }
     } 
@@ -589,7 +721,7 @@
 		      }
 
 		       if(isNumber == false || operatorNameDetected == true)
-	           {
+	           { 
 			     repetitiveExecutionProcedureOperatorsPreceding(name);
 				 statusCharactersNumeric = true;
                  errorDetector(element,true);				 
@@ -1464,11 +1596,11 @@
 		arrayOperatorsAndFunctions.splice(0,arrayOperatorsAndFunctions.length); //Limpia el array.
 		arrayScreenContainer.splice(0,arrayScreenContainer.length); //Limpia el array.
 		arrayGuardingPlaceFromAParenthesis.splice(0,arrayGuardingPlaceFromAParenthesis.length); //Limpia el array.
-		scrollScreenX = null;
         statusMemory = false;
 	    statusMemoryResult = false;
 		statusNumericalresultsInScreen = true;
 		statusCharactersNumeric = true;
+		screen.style.textIndent = '-1000px'; //Se activa para ocultar el texto hacia la izquierda.
 		errorDetector(element,true); //Cambia el color del boton a "azul", si es correcta la sintaxis.
 	}
 
@@ -1484,6 +1616,7 @@
 		screen1.innerHTML = ""; //Limpia la caja de texto.
 		statusMemoryResult = true;
 		statusNumericalresultsInScreen = false;
+		screen.style.textIndent = '-1000px'; //Se activa para ocultar el texto hacia la izquierda.
 		
 		for(var i=0; i<arrayScreenContainer.length; i++)
 		 {  
@@ -1664,6 +1797,7 @@
 			 calculate(); //Obtiene la nueva sintaxis (string) en la caja de texto.
 			 var expression  = screen.innerHTML;
 		     screen.innerHTML = eval(expression); //La funcion "eval" evalua la sintaxis (string) de la caja de texto.
+			 screen.style.textIndent = '0px'; //Se activa para ocultar el texto hacia la derecha.
 			 errorDetector(element,true); //Cambia el color del boton a "azul", si es correcta la sintaxis.
         }
         catch(e){
